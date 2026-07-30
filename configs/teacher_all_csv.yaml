@@ -1,0 +1,46 @@
+project:
+  name: forc_teacher_all_csv
+  seed: 42
+
+data:
+  simulated_dir: data/processed/teacher_forc_diagrams
+  experimental_dir: data/raw/experimental
+  processed_dir: data/processed
+  labels_csv: data/processed/teacher_forc_labels.csv
+  file_column: filename
+  target_columns:
+    - size
+  grid_size:
+    height: 128
+    width: 128
+  test_size: 0.15
+  val_size: 0.15
+
+preprocess:
+  normalisation: zscore
+  clip_percentile: 99.5
+  fill_value: 0.0
+
+augmentation:
+  enabled: true
+  noise_std: 0.03
+  intensity_scale_min: 0.85
+  intensity_scale_max: 1.15
+
+model:
+  task: regression
+  input_channels: 1
+  output_dim: 1
+  base_channels: 32
+  dropout: 0.15
+
+training:
+  batch_size: 16
+  epochs: 40
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  num_workers: 0
+  device: auto
+
+outputs:
+  run_dir: reports/runs/teacher_size_baseline
